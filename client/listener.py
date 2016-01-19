@@ -10,7 +10,7 @@ class Listener(object):
         if 'listener_address' in profile:
             self.ip = profile['listener_address']
         else:
-            self.ip = 'localhost'
+            self.ip = ''
         if 'listener_port' in profile:
             self.port = profile["listener_port"]
         else:
