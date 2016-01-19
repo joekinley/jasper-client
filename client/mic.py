@@ -55,11 +55,16 @@ class Mic:
         THRESHOLD_TIME = 1
 
         # prepare recording stream
-        stream = self._audio.open(format=pyaudio.paInt16,
+        while true:
+            try:
+                stream = self._audio.open(format=pyaudio.paInt16,
                                   channels=1,
                                   rate=RATE,
                                   input=True,
                                   frames_per_buffer=CHUNK)
+                break
+            except IOError:
+                self._logger.error("Audio device busy")
 
         # stores the audio data
         frames = []
