@@ -2,7 +2,7 @@
 import logging
 from notifier import Notifier
 from brain import Brain
-
+from listener import Listener
 
 class Conversation(object):
 
@@ -13,6 +13,7 @@ class Conversation(object):
         self.profile = profile
         self.brain = Brain(mic, profile)
         self.notifier = Notifier(profile)
+        self.listener = Listener(mic, profile)
 
     def handleForever(self):
         """
