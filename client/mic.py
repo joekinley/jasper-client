@@ -55,7 +55,7 @@ class Mic:
         THRESHOLD_TIME = 1
 
         # prepare recording stream
-        while true:
+        while True:
             try:
                 stream = self._audio.open(format=pyaudio.paInt16,
                                   channels=1,
