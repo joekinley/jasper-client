@@ -1,5 +1,6 @@
 from socket import *
 import thread
+import logging
 
 class Listener(object):
     def __init__(self, mic, profile):
