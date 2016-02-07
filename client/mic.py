@@ -10,7 +10,7 @@ import pyaudio
 import alteration
 import jasperpath
 from message import Message
-
+import Queue
 
 class Mic:
 
@@ -99,15 +99,16 @@ class Mic:
         needs to be restarted.
         """
         # before we passive listen, we wanna see if we have messages in the queue
-        if(self.queue != None && !self.queue.empty()):
+        if(self.queue != None and not self.queue.empty()):
             while True:
                 try:
-                    item = self.queue.get()
+                    item = self.queue.get(False, 1)
                     if(isinstance(item, Message)):
                         if(item.type == "listen"):
-                            item.msg = this.activeListen()
+                            item.msg = self.activeListen()
                             item.done = True
-                except Empty, e:
+                            self.queue.task_done()
+                except Queue.Empty, e:
                     break
         THRESHOLD_MULTIPLIER = 1.8
         RATE = 16000
