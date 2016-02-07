@@ -42,7 +42,7 @@ class Listener(object):
                 #print(data[4:])
             elif data.startswith("listen!"):
                 #answer = mic.activeListen()
-                msg = new Message(self, "listen")
+                msg = Message(self, "listen")
                 self.queue.put(msg)
                 self.queue.join()
 
