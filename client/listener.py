@@ -46,7 +46,7 @@ class Listener(object):
                 self.queue.put(msg)
                 self.queue.join()
                 #answer = data[7:]
-                clientsocket.send("said!"+msg.msg)
+                clientsocket.send("said!"+msg.msg+"\n")
             elif data.startswith("quit"):
                 clientsocket.close()
                 break
