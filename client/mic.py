@@ -9,6 +9,7 @@ import audioop
 import pyaudio
 import alteration
 import jasperpath
+from message import Message
 
 
 class Mic:
@@ -34,6 +35,7 @@ class Mic:
                           "that pop up during this process are normal and " +
                           "can usually be safely ignored.")
         self._audio = pyaudio.PyAudio()
+        self.queue = None
         self._logger.info("Initialization of PyAudio completed.")
 
     def __del__(self):
@@ -96,7 +98,17 @@ class Mic:
         Listens for PERSONA in everyday sound. Times out after LISTEN_TIME, so
         needs to be restarted.
         """
-
+        # before we passive listen, we wanna see if we have messages in the queue
+        if(self.queue != None && !self.queue.empty()):
+            while True:
+                try:
+                    item = self.queue.get()
+                    if(isinstance(item, Message)):
+                        if(item.type == "listen"):
+                            item.msg = this.activeListen()
+                            item.done = True
+                except Empty, e:
+                    break
         THRESHOLD_MULTIPLIER = 1.8
         RATE = 16000
         CHUNK = 1024

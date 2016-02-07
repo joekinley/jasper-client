@@ -3,10 +3,11 @@ import thread
 import logging
 
 class Listener(object):
-    def __init__(self, mic, profile):
+    def __init__(self, mic, profile, queue):
         self._logger = logging.getLogger(__name__)
         self.mic = mic
         self.profile = profile
+        self.queue = queue
         if 'listener_address' in profile:
             self.ip = profile['listener_address']
         else:
@@ -39,9 +40,13 @@ class Listener(object):
                 mic.say(data[4:])
                 #print(data[4:])
             elif data.startswith("listen!"):
-                answer = mic.activeListen()
+                //#answer = mic.activeListen()
+                msg = new Message(self, "listen")
+                self.queue.put(msg)
+                self.queue.join()
+
                 #answer = data[7:]
-                clientsocket.send("said!"+answer)
+                clientsocket.send("said!"+msg.msg)
             elif data.startswith("quit"):
                 clientsocket.close()
                 break

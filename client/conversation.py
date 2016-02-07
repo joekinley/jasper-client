@@ -3,17 +3,20 @@ import logging
 from notifier import Notifier
 from brain import Brain
 from listener import Listener
+import Queue
 
 class Conversation(object):
 
     def __init__(self, persona, mic, profile):
         self._logger = logging.getLogger(__name__)
+        self.queue = Queue.Queue()
         self.persona = persona
         self.mic = mic
         self.profile = profile
         self.brain = Brain(mic, profile)
         self.notifier = Notifier(profile)
-        self.listener = Listener(mic, profile)
+        self.mic.queue = self.queue
+        self.listener = Listener(mic, profile, self.queue)
 
     def handleForever(self):
         """
