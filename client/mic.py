@@ -259,7 +259,7 @@ class Mic:
                 break
 
         #self.speaker.play(jasperpath.data('audio', 'beep_lo.wav'))
-        self.say("Hmm")
+        #self.say("Hmm")
 
         # save the audio data
         stream.stop_stream()
